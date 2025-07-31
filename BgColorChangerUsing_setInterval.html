@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bg Color Changer</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI',sans-serif;
+            text-align: center;
+            color: #000000;
+        }
+
+        h1 {
+            margin-top: 60px;
+            font-size: 2rem;
+        }
+
+        h4 {
+            font-weight: normal;
+            margin-bottom: 40px;
+            font-style: italic;
+        }
+
+        button {
+            padding: 15px 30px;
+            margin: 10px;
+            font-size: 1rem;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: bold;
+            
+        }
+
+        #start {
+            background-color: #28a745;
+            color: white;
+        }
+
+        #start:hover {
+            background-color: #218838;
+            transform: scale(1.05);
+        }
+
+        #stop {
+            background-color: #dc3545;
+            color: white;
+        }
+
+        #stop:hover {
+            background-color: #c82333;
+            transform: scale(1.05);
+        }
+        #colorCode {
+            margin-top: 20px;
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <h1>Background color changer using setInterval()</h1>
+    <h4>Click "Start" to change the background every second, and "Stop" to freeze it!</h4>
+    <button id='start'>START</button>
+    <button id='stop'>STOP</button>
+    <p id="colorCode">Current Color: #ffffff</p>
+</body>
+<script>
+    let x;
+    const randomColor=function(){
+        const hex='0123456789ABCDEF';
+        let color='#';
+        for(let i=0;i<6;i++){
+            color += hex[Math.floor(Math.random()*16)];
+
+        }
+        return color;
+    }
+    const startChanging=function(){
+        if(!x){
+            x=setInterval(change,1000); 
+        }
+        function change() {
+            const color = randomColor(); 
+            document.body.style.backgroundColor = color;
+            document.getElementById('colorCode').textContent = `Current Color: ${color}`;
+        }
+    }
+    document.querySelector('#start').addEventListener('click',startChanging);
+    const stopChanging=function(){
+        clearInterval(x);
+        x=null;
+    }
+    document.querySelector('#stop').addEventListener('click',stopChanging);
+</script>
+
+</html>
