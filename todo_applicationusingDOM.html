@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Todo Application using DOM</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #eee;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            width: 350px;
+            margin: 40px auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 6px;
+            box-shadow: 0 0 8px #ccc;
+        }
+        h2 {
+            text-align: center;
+            color: #333;
+        }
+        .input-group {
+            margin-bottom: 12px;
+        }
+        .input-group label {
+            display: block;
+            margin-bottom: 4px;
+            color: #333;
+        }
+        .input-group input, .input-group textarea {
+            width: 100%;
+            padding: 6px;
+            border: 1px solid #bbb;
+            border-radius: 3px;
+            font-size: 14px;
+        }
+        button {
+            background: #3498db;
+            color: #fff;
+            border: none;
+            padding: 7px 14px;
+            border-radius: 3px;
+            font-size: 14px;
+            cursor: pointer;
+        }
+        button:disabled {
+            background: #aaa;
+            cursor: not-allowed;
+        }
+        #todos > div {
+            background: #f9f9f9;
+            margin-top: 10px;
+            padding: 10px;
+            border-radius: 4px;
+            border: 1px solid #eee;
+        }
+        #todos > div > div:first-child {
+            font-weight: bold;
+            color: #222;
+        }
+        #todos > div > div:nth-child(2) {
+            color: #555;
+            font-size: 13px;
+        }
+        #todos > div > button, #todos > div > .delete-btn {
+            margin-top: 6px;
+        }
+        .delete-btn {
+            background: #e74c3c;
+            margin-left: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>To-do Application Using DOM Manipulation</h2>
+        <div class="input-group">
+            <label for="title">Title</label>
+            <input type="text" id="title" placeholder="Enter todo title">
+        </div>
+        <div class="input-group">
+            <label for="description">Description</label>
+            <textarea id="description" rows="2" placeholder="Enter todo description"></textarea>
+        </div>
+        <button onclick="addTodo()">Add Todo</button>
+        <div id="todos"></div>
+    </div>
+    <script>
+        let globalId = 1;
+
+        function deleteTodo(todoId) {
+            const parent = document.getElementById("todos");
+            const child = document.getElementById(todoId);
+            if (child) {
+                parent.removeChild(child);
+            }
+        }
+
+        function markAsDone(todoId) {
+            const parent = document.getElementById(todoId);
+            const button = parent.querySelector("button");
+            if (button) {
+                button.innerHTML = "Done!";
+                button.disabled = true;
+                if (!parent.querySelector(".delete-btn")) {
+                    const deleteBtn = document.createElement("button");
+                    deleteBtn.innerHTML = "Delete";
+                    deleteBtn.className = "delete-btn";
+                    deleteBtn.onclick = function() { deleteTodo(todoId); };
+                    parent.appendChild(deleteBtn);
+                }
+            }
+        }
+
+        function createChild(title, description, id) {
+            const child = document.createElement("div");
+            const firstGrandParent = document.createElement("div");
+            firstGrandParent.innerHTML = title;
+            const secondGrandParent = document.createElement("div");
+            secondGrandParent.innerHTML = description;
+            const thirdGrandParent = document.createElement("button");
+            thirdGrandParent.innerHTML = "Mark as done";
+            thirdGrandParent.setAttribute("onclick", `markAsDone(${id})`);
+            child.appendChild(firstGrandParent);
+            child.appendChild(secondGrandParent);
+            child.appendChild(thirdGrandParent);
+            child.setAttribute("id", id);
+            return child;
+        }
+        function addTodo() {
+            const title = document.getElementById("title").value.trim();
+            const description = document.getElementById("description").value.trim();
+            if (title === "" || description === "") {
+                alert("Please fill in both fields.");
+                return;
+            }
+            const parent = document.getElementById("todos");
+            parent.appendChild(createChild(title, description, globalId++));
+            document.getElementById("title").value = "";
+            document.getElementById("description").value = "";
+        }
+    </script>
+</body>
+</html>
