@@ -5,3 +5,5 @@
 -took some help from sources like chatgpt,google for the css and error
 
 -its just a basic to-do application with features like "mark as done"
+
+-created this file using vite@latest method
