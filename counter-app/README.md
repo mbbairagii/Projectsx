@@ -1,4 +1,4 @@
 # COUNTER APP USING REACT
--I took the biolderplate folder using vite@latest
--this application contains no css or indexing at this point
+-I took the biolderplate folder using vite@latest <br/>
+-this application contains no css or indexing at this point <br/>
 -its just a learning folder !!
