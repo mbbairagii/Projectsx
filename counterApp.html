@@ -1,0 +1,94 @@
+<!-- //using plain html and javascript to create a counter app
+<!DOCTYPE html>
+<html>
+    <script>
+        function onButtonPress(){
+            const currentValue = document.getElementById("btn").innerHTML;
+            const currentCounter=currentValue.split(" ")[1];
+            const newCounter=parseInt(currentCounter)+1;
+            document.getElementById("btn").innerHTML="Counter "+newCounter;
+        }
+    </script>
+    <body>
+        <button id="btn" onclick="onButtonPress()">Counter 0</button>
+    </body>
+</html> -->
+
+
+
+
+
+
+
+<!-- //using normal states and components in react to create a counter app
+<!DOCTYPE html>
+<html>
+  <body>
+    <div id="buttonParent"></div>
+    <script>
+      let state = { count: 0 };
+
+      function onButtonPress() {
+        state.count = state.count + 1;
+        buttonComponentReRender();
+      }
+
+      function buttonComponentReRender() {
+        document.getElementById("buttonParent").innerHTML = "";
+        const button = document.createElement("button");
+        button.innerHTML = `Counter ${state.count}`;
+        button.addEventListener("click", onButtonPress);
+        document.getElementById("buttonParent").appendChild(button);
+      }
+
+      buttonComponentReRender();
+    </script>
+  </body>
+</html> -->
+
+
+
+
+
+
+
+//previous code is not efficient as it re-renders the whole button component on every state change so slightly optimized
+version than below
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Counter App</title>
+</head>
+
+<body>
+    <div id="buttonParent"></div>
+
+    <script>
+        let state = { count: 0 };
+
+        function onButtonPress() {
+            state.count = state.count + 1;
+            buttonComponentReRender();
+        }
+
+        function buttonComponentReRender() {
+            document.getElementById("buttonParent").innerHTML = "";
+            const component = buttonComponent(state.count);
+            document.getElementById("buttonParent").appendChild(component);
+        }
+
+        function buttonComponent(count) {
+            const button = document.createElement("button");
+            button.innerHTML = `Counter ${count}`;
+            // ✅ Correct way
+            button.addEventListener("click", onButtonPress);
+            return button;
+        }
+
+        buttonComponentReRender();
+    </script>
+</body>
+
+</html>
